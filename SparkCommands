@@ -1,4 +1,9 @@
-Build Spark for Hadoop 2.5
+##Build Spark for Hadoop 2.5
 
-安装git
+1. 安装git
+
+2. 配置好环境变量
+
+3. 运行 sbt/sbt -Dhadoop.version=2.5.0 -Pyarn assembly
+
 
