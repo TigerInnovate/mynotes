@@ -1,9 +1,28 @@
-##Build Spark for Hadoop 2.5
+Build Spark 1.1.0 for Hadoop 2.5
+
+0. download source package from spark.apache.org
 
 1. 安装git
 
 2. 配置好环境变量
 
-3. 运行 sbt/sbt -Dhadoop.version=2.5.0 -Pyarn assembly
+export JAVA_HOME=/usr/local/software/jdk1.7
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
 
+export HADOOP_HOME=/usr/local/software/hadoop-2.5.0
+export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+export HADOOP_CONF_DIR=/usr/local/software/hadoop-2.5.0/etc/hadoop
+export YARN_CONF_DIR=/usr/local/software/hadoop-2.5.0/etc/hadoop
 
+3. 进入解压好的source 目录（第一级）
+然后 运行 sbt/sbt -Dhadoop.version=2.5.0 -Pyarn assembly
+
+4. 进入conf目录，为spark-env.sh添加如下内容
+export YARN_CONF_DIR="/usr/local/software/hadoop-2.5.0/etc/hadoop"
+export HADOOP_CONF_DIR="/usr/local/software/hadoop-2.5.0/etc/hadoop"
+export SPARK_YARN_USER_ENV="CLASSPATH=/usr/local/software/hadoop-2.5.0/etc/hadoop"
+export SPARK_LIBRARY_PATH="/usr/local/software/hadoop-2.5.0/lib/native"
+
+5. 进入spark shell，运行bin/spark-shell --master yarn --deploy-mode client
